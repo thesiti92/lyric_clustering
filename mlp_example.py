@@ -17,8 +17,8 @@ X = np.vstack(features)
 clf = MLPRegressor(solver='lbfgs', alpha=1e-5,
                      hidden_layer_sizes=(5, 5), random_state=1)
 x_train, x_test, y_train, y_test = train_test_split(X, Y, random_state=42)
-feat_keys = ['danceability','energy','key','loudness','mode','speechiness','acousticness','instrumentalness','valence','tempo']
 clf.fit(x_train, y_train)
+feat_keys = ['danceability','energy','key','loudness','mode','speechiness','acousticness','instrumentalness','valence','tempo']
 default = [0.862, 0.608, 7, -4.762, 1, 0.0402, 0.00373, 6.14e-06, 0.825, 120.002]
 f_min = X.min(0)
 f_max = X.max(0)
