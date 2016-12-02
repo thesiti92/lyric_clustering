@@ -27,8 +27,10 @@ def get_vocab(lyric, total_vocab):
 
     return vec
 
-lyrics = json.load(open("country_lyrics.json"))
-vocab = parse_vocab(lyrics)
-json.dump(vocab, open("country_vocab.json", "w+"))
+lyrics = json.load(open("hiphop_lyrics.json"))
+# vocab = parse_vocab(lyrics)
+# json.dump(vocab, open("hiphop_vocab.json", "w+"))
+vocab = json.load(open("hiphop_vocab.json"))
+
 songs = [get_vocab(lyric, vocab) for lyric in lyrics]
-np.dump(songs, open("song_vecs.json", "w+"))
+json.dump(songs, open("hiphop_vecs.json", "w+"))
