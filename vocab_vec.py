@@ -1,4 +1,8 @@
 import json
+from PyDictionary import PyDictionary
+
+dict = PyDictionary()
+
 def parse_words(lyric):
     if type(lyric) is list:
         string =  " ".join(lyric)
@@ -12,7 +16,13 @@ def parse_vocab(lyrics):
     words = parse_words(lyrics)
     for word in words:
         if word not in vocab:
-            vocab.append(word)
+            #parses out all non-nouns
+            defn = dict.meaning(word)
+            if defn is None:
+                continue
+            elif 'Noun' in defn.keys():
+                vocab.append(word)
+                print word
     return vocab
 def get_vocab(lyric, total_vocab):
     lyric_words =  parse_words(lyric)
@@ -27,10 +37,11 @@ def get_vocab(lyric, total_vocab):
 
     return vec
 
-lyrics = json.load(open("hiphop_lyrics.json"))
-# vocab = parse_vocab(lyrics)
-# json.dump(vocab, open("hiphop_vocab.json", "w+"))
-vocab = json.load(open("hiphop_vocab.json"))
+clyrics = json.load(open("country_lyrics.json"))
+rlyrics = json.load(open("hiphop_lyrics.json"))
+lyrics = clyrics+rlyrics
+vocab = parse_vocab(lyrics)
+json.dump(vocab, open("join_vocab.json", "w+"))
 
-songs = [get_vocab(lyric, vocab) for lyric in lyrics]
-json.dump(songs, open("hiphop_vecs.json", "w+"))
+#songs = [get_vocab(lyric, vocab) for lyric in lyrics]
+#json.dump(songs, open("hiphop_vecs.json", "w+"))
