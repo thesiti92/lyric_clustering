@@ -1,13 +1,14 @@
 import numpy as np
 import json
 def round(arr, min=.5, max=1):
-    return [1 if x>min and x<max else 0 for x in arr]
-means = np.apply_along_axis(round, 0, np.loadtxt('mean_6vecs.dat'))
-# diff = np.setdiff1d(zero, one)
-print means.shape
-# print [np.nonzero(mean) for mean in means]
-vocab = json.load(open("country_vocab.json"))
-mean_vocab = np.array([[vocab[i] for i in np.nonzero(mean)[0]] for mean in means])
+    return [1 if x>min and x<=max else 0 for x in arr]
+vecs = np.loadtxt('mean_join_2vecs.dat')
+rmeans = np.apply_along_axis(round, 0, vecs, min=.2, max=.6)
+print rmeans.shape
+diff = np.subtract(rmeans[1], rmeans[0])
+mean_d = np.apply_along_axis(round, 0, diff)
 
-print mean_vocab
-print len(mean_vocab)
+# print [np.nonzero(mean) for mean in means]
+vocab = np.array(json.load(open("join_vocab.json")))
+# mean_vocab = np.array([[vocab[i] for i in np.nonzero(mean)[0]] for mean in means])
+print vocab[np.nonzero(mean_d)]
