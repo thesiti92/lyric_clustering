@@ -1,5 +1,6 @@
 import json
 import pandas as pd
+stopwords = json.load(open('stopwords.json'))
 def parse_words(lyric):
     if type(lyric) is list:
         string =  " ".join(lyric)
@@ -13,11 +14,12 @@ def parse_vocab(lyrics):
     words = parse_words(lyrics)
     print len(words)
     for word in words:
-        if word not in vocab:
-            vocab[word] = 1
-        else:
-            vocab[word] += 1
-                # print word
+        if word not in stopwords:
+            if word not in vocab:
+                vocab[word] = 1
+            else:
+                vocab[word] += 1
+                    # print word
     return vocab
 def get_vocab(lyric, total_vocab):
     lyric_words =  parse_words(lyric)
@@ -38,11 +40,15 @@ lyrics = clyrics+rlyrics
 
 vocab = parse_vocab(lyrics)
 df = pd.Series(vocab, name='frequency').order().to_frame().reset_index()
-adjust1 = int(len(vocab)*.90)
-adjust2 = int(len(vocab)*.02)
+df['country'] = df['index'].map(parse_vocab(clyrics))
+df['rap'] = df['index'].map(parse_vocab(rlyrics))
 
-df2 = df[adjust1:-1*adjust2]
-# print df2
-json.dump(vocab, open("join_freq_vocab-trimmed.json", "w+"))
-songs = [get_vocab(lyric, df2["index"].tolist()) for lyric in lyrics]
-json.dump(songs, open("join_freq_vecs.json", "w+"))
+adjust1 = int(len(vocab)*.90)
+# adjust2 = int(len(vocab)*.0005)
+
+df2 = df[adjust1:]
+df2.to_csv("top10percent_words.csv")
+print df
+# json.dump(vocab, open("join_freq_vocab-trimmed.json", "w+"))
+# songs = [get_vocab(lyric, df2["index"].tolist()) for lyric in lyrics]
+# json.dump(songs, open("join_freq2_vecs.json", "w+"))

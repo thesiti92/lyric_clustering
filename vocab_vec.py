@@ -2,7 +2,7 @@ import json
 # from PyDictionary import PyDictionary
 
 # dict = PyDictionary()
-dict_words = [x.lower() for x in json.load(open("dict_graph.json")).keys()] + json.load(open("swears.json"))
+# dict_words = [x.lower() for x in json.load(open("dict_graph.json")).keys()] + json.load(open("swears.json"))
 print len(dict_words)
 def parse_words(lyric):
     if type(lyric) is list:
@@ -40,6 +40,6 @@ rlyrics = json.load(open("hiphop_lyrics.json"))
 lyrics = clyrics+rlyrics
 vocab = parse_vocab(lyrics)
 json.dump(vocab, open("join_swear_vocab.json", "w+"))
-# 
+#
 # songs = [get_vocab(lyric, vocab) for lyric in lyrics]
 # json.dump(songs, open("join_swear_vecs.json", "w+"))
