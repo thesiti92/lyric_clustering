@@ -13,11 +13,12 @@ def projectData(data, ndim=2):
   return PCA(n_components=ndim).fit_transform(data)
 
 
-def plotData(data, colors,text, means=None, all_means=None):
+def plotData(data, colors,text, genre=None, means=None,  all_means=None):
 
-  data_proj = projectData(data)
+  data_proj = projectData(data, 3)
  
   p_data = []
+  """
   trace2 = go.Scatter(
             x=data_proj[:,0],
             y=data_proj[:,1],
@@ -27,10 +28,32 @@ def plotData(data, colors,text, means=None, all_means=None):
                 size=12,
                 opacity=1,
                 color=colors,
+                line= dict(width=3,
+                          color=genre),
                 colorscale='Jet',
                 symbol='o'
+            
             )
         )
+    """
+
+
+  trace2 = go.Scatter3d(
+        x=data_proj[:,0],
+        y=data_proj[:,1],
+        z=data_proj[:,2],
+        mode='markers',
+        marker=dict(
+            size=6,
+            color=colors,
+            line= dict(width=6,
+                      color=genre),
+            #color=error,
+            colorscale='Jet',
+            #opacity=0.5
+        )   
+    )   
+
   p_data.append(trace2)
 
 
@@ -43,7 +66,7 @@ def plotData(data, colors,text, means=None, all_means=None):
 
 if __name__ == "__main__":
 
-  n_centroids = 3
+  n_centroids = 4
   n_points = 2000
   models = [KMeans(n_clusters = n_centroids)]
 
@@ -64,7 +87,7 @@ if __name__ == "__main__":
     model.fit(data[:n_points, :])
     print "DONE"
     print "plotting"
-    data_proj = plotData(data[:n_points,:], model.labels_, range(n_points))
+    data_proj = plotData(data[:n_points,:], model.labels_, range(n_points), ['green']*1000 + ['orange']*1000)
     print "DONE"
 
 
