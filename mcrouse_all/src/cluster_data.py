@@ -3,7 +3,7 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import Normalizer
 from sklearn.decomposition import PCA
-import plotly as py
+import plotly.plotly as py
 import plotly.graph_objs as go
 from plotly import tools
 from util import *
@@ -60,8 +60,8 @@ def plotData(data, colors,text, genre=None, means=None,  all_means=None):
   layout = go.Layout( hovermode="closest" )
 
   fig = go.Figure(data=p_data, layout=layout)
-  py.offline.plot(fig, filename='kmeans_result.html')
-  return data_proj
+  plot_url = py.plot(fig, filename='kmeans_result')
+  return plot_url
 
 
 if __name__ == "__main__":
@@ -89,6 +89,3 @@ if __name__ == "__main__":
     print "plotting"
     data_proj = plotData(data[:n_points,:], model.labels_, range(n_points), ['green']*1000 + ['orange']*1000)
     print "DONE"
-
-
-  
