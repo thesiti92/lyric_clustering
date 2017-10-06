@@ -7,7 +7,7 @@ The main bulk of this repo is dedicated to clustering songs into genres based on
 
 To improve the results, I tried to generate the BOW vectors using normalized frequency counts as opposed to simply word occurance in a song.In preprocessing, I chopped the bottom 25% and top 5% least/most frequent words off of the BOW vocab vector to produce better results, but in the end this method didn't work as well as the previous one. I did, however, dump out these frequency counts to an Excel file and got some cool graphs.
 
-Vocab_vec.py/vocab_vec_freq.py for creating the bow <br />
-norm.py for normalizing/scaling the data<br />
-clusters_last_stand.py for the clustering<br />
-lyric_variance.py for a look at the error. <br />
+* Vocab_vec.py/vocab_vec_freq.py for creating the vectors 
+* norm.py for normalizing/scaling the data when using the frequency counts
+* clusters_last_stand.py for clustering the BOW vectors
+* lyric_variance.py for analyzing the error of the clusters
